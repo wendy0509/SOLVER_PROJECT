@@ -1,0 +1,218 @@
+/* static/css/style.css */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #f4f6f9;
+  color: #1a1a2e;
+  line-height: 1.6;
+}
+
+header {
+  background: #1a1a2e;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+header h1 { font-size: 1.8rem; font-weight: 600; }
+header .subtitle { color: #a0aec0; margin-top: 4px; font-size: 0.95rem; }
+
+main {
+  max-width: 860px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Tarjetas ─────────────────────────────────────────────────── */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+.card h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+.hint { font-size: 0.85rem; color: #718096; margin-bottom: 1rem; }
+
+/* ── Badges ───────────────────────────────────────────────────── */
+.badge {
+  background: #ebf4ff;
+  color: #2b6cb0;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin-left: 6px;
+  font-weight: 500;
+}
+.badge-green { background: #f0fff4; color: #276749; }
+
+/* ── Inputs ───────────────────────────────────────────────────── */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+label { font-size: 0.9rem; font-weight: 500; }
+
+input[type="number"], select {
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  background: white;
+  transition: border-color 0.2s;
+}
+input[type="number"] { width: 80px; text-align: center; }
+input[type="number"]:focus, select:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66,153,225,0.15);
+}
+
+/* ── Coeficientes inline ──────────────────────────────────────── */
+.coeff-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.coeff-label { font-size: 0.85rem; color: #4a5568; }
+.formula {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: #2d3748;
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin-top: 8px;
+}
+
+/* ── Restricciones ────────────────────────────────────────────── */
+.constraint-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: #f7fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+.constraint-num {
+  font-size: 0.8rem;
+  color: #718096;
+  min-width: 24px;
+  font-weight: 600;
+}
+.constraint-row .sign {
+  font-weight: 600;
+  color: #276749;
+}
+.btn-remove {
+  background: none;
+  border: none;
+  color: #e53e3e;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0 4px;
+  line-height: 1;
+}
+.btn-remove:hover { color: #c53030; }
+
+/* ── Botones ──────────────────────────────────────────────────── */
+.btn-primary {
+  background: #1a1a2e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.btn-primary:hover { background: #2d2d5e; }
+.btn-primary:active { transform: scale(0.98); }
+
+.btn-secondary {
+  background: white;
+  color: #2d3748;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-secondary:hover { background: #f7fafc; }
+
+.center { text-align: center; }
+
+/* ── Resultados ───────────────────────────────────────────────── */
+#result-status {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.status-optimal { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; }
+.status-error   { background: #fff5f5; color: #c53030; border: 1px solid #feb2b2; }
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+.metric-card {
+  background: #f7fafc;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+}
+.metric-card .metric-label { font-size: 0.75rem; color: #718096; margin-bottom: 4px; }
+.metric-card .metric-value { font-size: 1.5rem; font-weight: 600; color: #1a1a2e; }
+.metric-card.highlight .metric-value { color: #276749; }
+
+#result-steps h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #2d3748;
+}
+#steps-list {
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+#steps-list li {
+  font-size: 0.82rem;
+  color: #4a5568;
+  font-family: 'Courier New', monospace;
+  background: #f7fafc;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* ── Loading spinner ──────────────────────────────────────────── */
+.spinner {
+  display: inline-block;
+  width: 18px; height: 18px;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

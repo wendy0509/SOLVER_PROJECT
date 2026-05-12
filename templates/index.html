@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solver PL — Programación Lineal</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+  <header>
+    <h1>Solver de Programación Lineal</h1>
+    <p class="subtitle">Maximiza o minimiza tu función objetivo con cualquier tipo de restricción</p>
+  </header>
+
+  <main>
+
+    <!-- ── 1. Configuración general ─────────────────────────────── -->
+    <section class="card">
+      <h2>1. Configuración</h2>
+
+      <div class="config-row">
+        <!-- Tipo de optimización -->
+        <div class="config-group">
+          <p class="config-label">Tipo de optimización</p>
+          <div class="toggle-group" id="obj-type-toggle">
+            <button class="toggle-btn active" data-value="max" onclick="setObjType('max')">
+              ↑ Maximizar
+            </button>
+            <button class="toggle-btn" data-value="min" onclick="setObjType('min')">
+              ↓ Minimizar
+            </button>
+          </div>
+        </div>
+
+        <!-- Número de variables -->
+        <div class="config-group">
+          <p class="config-label">Variables de decisión</p>
+          <div class="row">
+            <select id="n-vars" onchange="buildForm()">
+              <option value="2">2 variables</option>
+              <option value="3">3 variables</option>
+              <option value="4">4 variables</option>
+              <option value="5">5 variables</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 2. Función objetivo ───────────────────────────────────── -->
+    <section class="card">
+      <h2>2. Función objetivo &nbsp;<span class="badge" id="obj-badge">Maximizar Z</span></h2>
+      <p class="hint">Ingresa el coeficiente de cada variable en la función que deseas optimizar.</p>
+
+      <div id="objective-inputs" class="coeff-row"></div>
+      <p class="formula" id="obj-formula">Z = ?</p>
+    </section>
+
+    <!-- ── 3. Restricciones ──────────────────────────────────────── -->
+    <section class="card">
+      <h2>3. Restricciones</h2>
+      <p class="hint">
+        Puedes usar <strong>≤</strong> (menor o igual), <strong>≥</strong> (mayor o igual)
+        o <strong>=</strong> (igual exacto) en cada restricción.
+      </p>
+
+      <div id="constraints-area"></div>
+
+      <button class="btn-secondary" onclick="addConstraint()">+ Agregar restricción</button>
+    </section>
+
+    <!-- ── Resolver ──────────────────────────────────────────────── -->
+    <div class="center">
+      <button class="btn-primary" id="solve-btn" onclick="solve()">Resolver problema</button>
+    </div>
+
+    <!-- ── 4. Resultados ─────────────────────────────────────────── -->
+    <section class="card" id="results-section" style="display:none;">
+      <h2>4. Solución óptima</h2>
+
+      <div id="result-status"></div>
+      <div id="result-cards" class="metric-grid"></div>
+
+      <div id="result-steps">
+        <h3>Pasos del algoritmo Simplex</h3>
+        <ol id="steps-list"></ol>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script>buildForm();</script>
+</body>
+</html>
