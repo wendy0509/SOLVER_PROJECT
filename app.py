@@ -1,12 +1,20 @@
-## app.py
+# app.py
 from flask import Flask, render_template, request, jsonify
 from solver import simplex
 
 app = Flask(__name__)
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/caso")
+def caso():
+    """Página del caso de estudio FincaOro S.A.S."""
+    return render_template("caso.html")
+
 
 @app.route("/solve", methods=["POST"])
 def solve():

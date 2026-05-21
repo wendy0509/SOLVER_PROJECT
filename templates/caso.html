@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Caso de Estudio — FincaOro S.A.S. | Solver PL</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- CSS -->
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}"
+  />
+
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/caso.css') }}"
+  />
+</head>
+
+<body>
+
+  <!-- ========================================================= -->
+  <!-- HEADER -->
+  <!-- ========================================================= -->
+
+  <header class="site-header">
+
+    <div class="header-inner">
+
+      <a href="/" class="brand">
+        Solver PL
+      </a>
+
+      <nav class="site-nav">
+
+        <a href="/" class="nav-link">
+          Resolver
+        </a>
+
+        <a href="/caso" class="nav-link active">
+          Caso de Estudio
+        </a>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- HERO -->
+  <!-- ========================================================= -->
+
+  <section class="case-hero">
+
+    <div class="hero-container">
+
+      <div class="hero-eyebrow">
+        Caso de Estudio · Optimización Lineal
+      </div>
+
+      <h1 class="hero-title">
+        FincaOro S.A.S.
+      </h1>
+
+      <p class="hero-sub">
+        Maximización de utilidad en producción cafetera del Eje Cafetero colombiano
+      </p>
+
+      <div class="hero-pills">
+
+        <span class="pill pill-green">
+          3 variables de decisión
+        </span>
+
+        <span class="pill pill-blue">
+          4 restricciones
+        </span>
+
+        <span class="pill pill-amber">
+          Método Simplex
+        </span>
+
+        <span class="pill pill-gray">
+          Maximización LP
+        </span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- MAIN -->
+  <!-- ========================================================= -->
+
+  <main class="case-main">
+
+    <!-- ===================================================== -->
+    <!-- NAV LATERAL -->
+    <!-- ===================================================== -->
+
+    <nav class="section-nav" id="section-nav">
+
+      <a href="#contexto" class="snav-link active">
+        01 Contexto
+      </a>
+
+      <a href="#datos" class="snav-link">
+        02 Datos
+      </a>
+
+      <a href="#formulacion" class="snav-link">
+        03 Formulación
+      </a>
+
+      <a href="#ejecucion" class="snav-link">
+        04 Ejecución
+      </a>
+
+      <a href="#resultados" class="snav-link">
+        05 Resultados
+      </a>
+
+      <a href="#conclusiones" class="snav-link">
+        06 Conclusiones
+      </a>
+
+    </nav>
+
+    <!-- ===================================================== -->
+    <!-- CONTENIDO -->
+    <!-- ===================================================== -->
+
+    <div class="case-content">
+
+      <!-- ================================================= -->
+      <!-- 01 · CONTEXTO -->
+      <!-- ================================================= -->
+
+      <section class="case-section" id="contexto">
+
+        <div class="section-label">
+          01 · Contexto
+        </div>
+
+        <h2 class="section-title">
+          Perfil de la empresa y problema de negocio
+        </h2>
+
+        <div class="two-col">
+
+          <article class="info-card">
+
+            <div class="ic-icon">
+              🏭
+            </div>
+
+            <h3 class="ic-title">
+              ¿Quién es FincaOro?
+            </h3>
+
+            <p>
+              FincaOro S.A.S. es una empresa mediana ubicada en Manizales,
+              Caldas. Se dedica a la tostión, empaque y comercialización de café
+              especial bajo tres presentaciones:
+              <strong>Selecto</strong>,
+              <strong>Estándar</strong> y
+              <strong>Exportación</strong>.
+            </p>
+
+            <p>
+              Cada presentación tiene diferente precio de venta, costo de
+              producción y requerimiento de recursos, lo que hace que la decisión
+              de cuánto producir de cada una sea un problema de optimización real.
+            </p>
+
+          </article>
+
+          <article class="info-card">
+
+            <div class="ic-icon">
+              🎯
+            </div>
+
+            <h3 class="ic-title">
+              ¿Cuál es el problema?
+            </h3>
+
+            <p>
+              La empresa cuenta con recursos limitados semanales: horas de
+              tostión, kilogramos de café verde disponible y unidades de empaque.
+              Además tiene un contrato de suministro mínimo con una cadena de
+              supermercados.
+            </p>
+
+            <p>
+              La gerencia necesita saber
+              <strong>
+                exactamente cuántos kilogramos producir de cada presentación por
+                semana
+              </strong>
+              para maximizar la utilidad total sin violar ningún límite operativo.
+            </p>
+
+          </article>
+
+        </div>
+
+        <div class="highlight-strip">
+
+          <span class="hs-label">
+            Objetivo del modelo
+          </span>
+
+          <p>
+            Determinar el mix de producción semanal óptimo de las tres líneas de
+            café que
+            <strong>maximice la utilidad total</strong>,
+            sujeto a las restricciones reales de capacidad de planta.
+          </p>
+
+        </div>
+
+      </section>
+
+     <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- 02 · DATOS                                                -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section class="case-section" id="datos">
+      <div class="section-label">02 · Análisis de datos</div>
+      <h2 class="section-title">Variables, utilidades y recursos disponibles</h2>
+
+      <p class="section-intro">Los siguientes datos fueron recopilados del área de producción y costos de FincaOro para una semana típica de operación:</p>
+
+      <!-- Tabla de productos -->
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Variable</th>
+              <th>Producto</th>
+              <th>Utilidad / kg</th>
+              <th>Tostión (h/kg)</th>
+              <th>Mat. prima (kg/kg)</th>
+              <th>Empaque (und/kg)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="var-tag x1">x₁</span></td>
+              <td><strong>Café Selecto</strong></td>
+              <td class="num green">$18.000</td>
+              <td class="num">2</td>
+              <td class="num">1,2</td>
+              <td class="num">1</td>
+            </tr>
+            <tr>
+              <td><span class="var-tag x2">x₂</span></td>
+              <td><strong>Café Estándar</strong></td>
+              <td class="num blue">$11.000</td>
+              <td class="num">1</td>
+              <td class="num">1,0</td>
+              <td class="num">1</td>
+            </tr>
+            <tr>
+              <td><span class="var-tag x3">x₃</span></td>
+              <td><strong>Café Exportación</strong></td>
+              <td class="num amber">$25.000</td>
+              <td class="num">3</td>
+              <td class="num">1,5</td>
+              <td class="num">2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Recursos disponibles -->
+      <h3 class="sub-title">Capacidades semanales disponibles</h3>
+      <div class="resource-grid">
+        <div class="resource-card rc-teal">
+          <div class="rc-icon">⏱</div>
+          <div class="rc-name">Horas de tostión</div>
+          <div class="rc-value">240 h/sem</div>
+          <div class="rc-detail">2 tostadores × 120 horas</div>
+        </div>
+        <div class="resource-card rc-amber">
+          <div class="rc-icon">🌿</div>
+          <div class="rc-name">Materia prima</div>
+          <div class="rc-value">300 kg/sem</div>
+          <div class="rc-detail">Café verde en bodega</div>
+        </div>
+        <div class="resource-card rc-blue">
+          <div class="rc-icon">📦</div>
+          <div class="rc-name">Unidades de empaque</div>
+          <div class="rc-value">200 und/sem</div>
+          <div class="rc-detail">Bolsas y cajas disponibles</div>
+        </div>
+        <div class="resource-card rc-pink">
+          <div class="rc-icon">📋</div>
+          <div class="rc-name">Demanda mínima</div>
+          <div class="rc-value">≥ 20 kg/sem</div>
+          <div class="rc-detail">Contrato Café Estándar</div>
+        </div>
+      </div>
+    </section>
+ <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- 03 · FORMULACIÓN                                          -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section class="case-section" id="formulacion">
+      <div class="section-label">03 · Formulación matemática</div>
+      <h2 class="section-title">Modelo de Programación Lineal</h2>
+
+      <p class="section-intro">Traducción del problema de negocio al lenguaje matemático formal del modelo LP:</p>
+
+      <!-- Función objetivo -->
+      <div class="formula-block">
+        <div class="fb-label">Función objetivo</div>
+        <div class="fb-content">
+          <span class="fb-keyword">Maximizar</span>
+          <span class="fb-expr">Z = 18.000x₁ + 11.000x₂ + 25.000x₃</span>
+        </div>
+        <div class="fb-comment">// Utilidad total semanal en pesos colombianos</div>
+      </div>
+
+      <!-- Restricciones -->
+      <h3 class="sub-title">Restricciones del modelo</h3>
+
+      <div class="constraint-list">
+        <div class="cl-item">
+          <div class="cl-badge cl-teal">R₁</div>
+          <div class="cl-body">
+            <div class="cl-formula">2x₁ + x₂ + 3x₃ ≤ 240</div>
+            <div class="cl-desc">Capacidad de tostión — no puede superar las 240 horas semanales disponibles</div>
+          </div>
+        </div>
+        <div class="cl-item">
+          <div class="cl-badge cl-amber">R₂</div>
+          <div class="cl-body">
+            <div class="cl-formula">1,2x₁ + x₂ + 1,5x₃ ≤ 300</div>
+            <div class="cl-desc">Materia prima — límite de 300 kg de café verde disponibles en bodega por semana</div>
+          </div>
+        </div>
+        <div class="cl-item">
+          <div class="cl-badge cl-blue">R₃</div>
+          <div class="cl-body">
+            <div class="cl-formula">x₁ + x₂ + 2x₃ ≤ 200</div>
+            <div class="cl-desc">Empaque — máximo 200 unidades de bolsas y cajas disponibles por semana</div>
+          </div>
+        </div>
+        <div class="cl-item">
+          <div class="cl-badge cl-pink">R₄</div>
+          <div class="cl-body">
+            <div class="cl-formula">x₂ ≥ 20</div>
+            <div class="cl-desc">Demanda mínima contractual — al menos 20 kg/semana de Café Estándar para supermercado</div>
+          </div>
+        </div>
+        <div class="cl-item">
+          <div class="cl-badge cl-gray">R₅</div>
+          <div class="cl-body">
+            <div class="cl-formula">x₁, x₂, x₃ ≥ 0</div>
+            <div class="cl-desc">No negatividad — no se pueden producir cantidades negativas de ningún producto</div>
+          </div>
+        </div>
+      </div>
+    </section>
+<!-- ══════════════════════════════════════════════════════════ -->
+    <!-- 04 · EJECUCIÓN                                            -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section class="case-section" id="ejecucion">
+      <div class="section-label">04 · Ejecución</div>
+      <h2 class="section-title">Resolución por el método Simplex</h2>
+
+      <p class="section-intro">El algoritmo Simplex transforma el problema a forma estándar e itera hasta encontrar la solución óptima:</p>
+
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Forma estándar — agregar variables auxiliares</div>
+            <div class="step-code">R₁: 2x₁+x₂+3x₃ + s₁ = 240
+R₂: 1,2x₁+x₂+1,5x₃ + s₂ = 300
+R₃: x₁+x₂+2x₃ + s₃ = 200
+R₄: x₂ − e₄ + a₄ = 20  ← exceso + artificial (Big-M)</div>
+            <p class="step-note">Se agregan variables de holgura (s) para ≤, variable de exceso (e) y artificial (a) para ≥.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Tabla inicial con base factible</div>
+            <p class="step-note">La base inicial es {s₁, s₂, s₃, a₄}. La función Z se ajusta con Big-M = 1.000.000 para penalizar la variable artificial y forzar su salida.</p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Iteración 1 — entra x₃ (mayor coeficiente en Z: 25.000)</div>
+            <div class="step-code">Prueba de razón mínima:
+  R₁: 240/3 = 80  ← mínima → SALE s₁
+  R₂: 300/1,5 = 200
+  R₃: 200/2 = 100
+Pivote sobre elemento [R₁, x₃] → eliminación gaussiana</div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Iteración 2 — entra x₁ (siguiente aporte positivo a Z)</div>
+            <div class="step-code">Prueba de razón mínima sobre tabla actualizada:
+  Sale s₃ · Pivote sobre [R₃, x₁]
+  Actualización de todas las filas por eliminación gaussiana</div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <div class="step-title">Iteración 3 — entra x₂ para satisfacer restricción R₄</div>
+            <div class="step-code">Sale a₄ (artificial) → restricción mínima satisfecha
+La artificial sale de la base: x₂ = 20 kg ✓</div>
+          </div>
+        </div>
+
+        <div class="step-item step-final">
+          <div class="step-num">✓</div>
+          <div class="step-body">
+            <div class="step-title">Criterio de parada — solución óptima alcanzada</div>
+            <p class="step-note">Ningún coeficiente en la fila Z es negativo. El algoritmo convergió en <strong>3 iteraciones</strong>. La tabla final entrega directamente los valores óptimos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- 05 · RESULTADOS                                           -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section class="case-section" id="resultados">
+      <div class="section-label">05 · Resultados</div>
+      <h2 class="section-title">Solución óptima del modelo</h2>
+
+      <!-- Utilidad total -->
+      <div class="result-hero">
+        <div class="rh-eyebrow">Utilidad máxima semanal alcanzada</div>
+        <div class="rh-value">$2.495.000</div>
+        <div class="rh-delta">↑ 36% respecto al plan anterior ($1.840.000/semana)</div>
+      </div>
+
+      <!-- Valores óptimos -->
+      <div class="three-col">
+        <div class="result-card rc-accent-green">
+          <div class="rcv-label">x₁ · Café Selecto</div>
+          <div class="rcv-value">50 kg</div>
+          <div class="rcv-sub">Utilidad: $900.000</div>
+          <div class="rcv-detail">Usa 100h de tostión</div>
+        </div>
+        <div class="result-card rc-accent-blue">
+          <div class="rcv-label">x₂ · Café Estándar</div>
+          <div class="rcv-value">20 kg</div>
+          <div class="rcv-sub">Utilidad: $220.000</div>
+          <div class="rcv-detail">Mínimo contractual ✓</div>
+        </div>
+        <div class="result-card rc-accent-amber">
+          <div class="rcv-label">x₃ · Café Exportación</div>
+          <div class="rcv-value">40 kg</div>
+          <div class="rcv-sub">Utilidad: $1.000.000</div>
+          <div class="rcv-detail">Recurso más rentable</div>
+        </div>
+      </div>
+
+      <!-- Verificación -->
+      <h3 class="sub-title">Verificación de restricciones</h3>
+      <div class="verify-list">
+        <div class="vl-item vl-ok">
+          <span class="vl-icon">✓</span>
+          <span class="vl-formula">R₁ Tostión: 2(50) + 1(20) + 3(40) = <strong>240 ≤ 240</strong></span>
+          <span class="vl-status">Recurso activo (cuello de botella)</span>
+        </div>
+        <div class="vl-item vl-ok">
+          <span class="vl-icon">✓</span>
+          <span class="vl-formula">R₂ Mat. prima: 1,2(50) + 20 + 1,5(40) = <strong>140 ≤ 300</strong></span>
+          <span class="vl-status">Holgura: 160 kg disponibles</span>
+        </div>
+        <div class="vl-item vl-ok">
+          <span class="vl-icon">✓</span>
+          <span class="vl-formula">R₃ Empaque: 50 + 20 + 2(40) = <strong>150 ≤ 200</strong></span>
+          <span class="vl-status">Holgura: 50 unidades disponibles</span>
+        </div>
+        <div class="vl-item vl-ok">
+          <span class="vl-icon">✓</span>
+          <span class="vl-formula">R₄ Demanda: x₂ = <strong>20 ≥ 20</strong></span>
+          <span class="vl-status">Restricción satisfecha exactamente</span>
+        </div>
+      </div>
+
+      <!-- Uso de recursos -->
+      <h3 class="sub-title">Uso de recursos (% del límite semanal)</h3>
+      <div class="usage-bars">
+        <div class="ub-row">
+          <span class="ub-name">Tostión</span>
+          <div class="ub-track">
+            <div class="ub-fill ub-red" style="width:100%"></div>
+          </div>
+          <span class="ub-pct">100%</span>
+          <span class="ub-tag tag-danger">Cuello de botella</span>
+        </div>
+        <div class="ub-row">
+          <span class="ub-name">Empaque</span>
+          <div class="ub-track">
+            <div class="ub-fill ub-amber" style="width:75%"></div>
+          </div>
+          <span class="ub-pct">75%</span>
+          <span class="ub-tag tag-warn">Margen moderado</span>
+        </div>
+        <div class="ub-row">
+          <span class="ub-name">Mat. prima</span>
+          <div class="ub-track">
+            <div class="ub-fill ub-green" style="width:47%"></div>
+          </div>
+          <span class="ub-pct">47%</span>
+          <span class="ub-tag tag-ok">Amplia holgura</span>
+        </div>
+      </div>
+    </section>
+       <!-- ══════════════════════════════════════════════════════════ -->
+    <!-- 06 · CONCLUSIONES                                         -->
+    <!-- ══════════════════════════════════════════════════════════ -->
+    <section class="case-section" id="conclusiones">
+      <div class="section-label">06 · Conclusiones</div>
+      <h2 class="section-title">Hallazgos y recomendaciones estratégicas</h2>
+
+      <div class="conclusions-list">
+        <div class="concl-item">
+          <div class="concl-num">01</div>
+          <div class="concl-body">
+            <h4>Mix óptimo identificado con precisión matemática</h4>
+            <p>La solución óptima es <strong>50 kg de Selecto, 20 kg de Estándar y 40 kg de Exportación</strong>, generando $2.495.000 de utilidad semanal — un 36% superior al plan empírico anterior de $1.840.000.</p>
+          </div>
+        </div>
+        <div class="concl-item">
+          <div class="concl-num">02</div>
+          <div class="concl-body">
+            <h4>Café Exportación es el producto estrella</h4>
+            <p>Con $25.000/kg de utilidad, el modelo lo maximiza hasta el límite que permiten los recursos. Esto valida la intuición comercial de la gerencia pero ahora con soporte cuantitativo exacto y reproducible.</p>
+          </div>
+        </div>
+        <div class="concl-item">
+          <div class="concl-num">03</div>
+          <div class="concl-body">
+            <h4>La tostión es el cuello de botella crítico</h4>
+            <p>La restricción R₁ está activa al 100%. La empresa debe evaluar si el costo de un tercer turno de tostión o nueva maquinaria se justifica con el incremento de utilidad proyectado. Un análisis de sensibilidad mostraría el precio sombra de este recurso.</p>
+          </div>
+        </div>
+        <div class="concl-item">
+          <div class="concl-num">04</div>
+          <div class="concl-body">
+            <h4>El contrato mínimo tiene un costo de oportunidad</h4>
+            <p>Los 20 kg mínimos de Café Estándar ocupan capacidad que podría destinarse a Exportación. Se recomienda calcular el costo de oportunidad real y renegociar el contrato o compensarlo con precio diferencial.</p>
+          </div>
+        </div>
+        <div class="concl-item">
+          <div class="concl-num">05</div>
+          <div class="concl-body">
+            <h4>La PL como herramienta de planificación continua</h4>
+            <p>El modelo puede actualizarse semanalmente con nuevos precios de café verde o capacidades disponibles. Esto lo convierte en una herramienta de gestión operativa que reemplaza decisiones intuitivas por criterios matemáticos objetivos.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA al solver -->
+      <div class="cta-solver">
+        <div class="cta-text">
+          <h3>¿Quieres resolver tu propio problema?</h3>
+          <p>Usa el Solver interactivo para ingresar tus propios datos y encontrar la solución óptima con el mismo algoritmo Simplex usado en este caso.</p>
+        </div>
+        <a href="/" class="cta-btn">Ir al Solver →</a>
+      </div>
+    </section>
+
+
+    </div>
+
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- FOOTER -->
+  <!-- ========================================================= -->
+
+  <footer class="site-footer">
+
+    <p>
+      Solver de Programación Lineal · Algoritmo Simplex implementado desde cero
+      en Python + Flask
+    </p>
+
+  </footer>
+
+  <!-- JS -->
+  <script
+    src="{{ url_for('static', filename='js/caso.js') }}"
+  ></script>
+
+</body>
+
+</html>
